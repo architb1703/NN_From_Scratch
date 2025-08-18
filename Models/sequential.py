@@ -1,5 +1,5 @@
 import torch, torch.nn as nn
-from Layers.linear import Linear_Layer
+from Layers.layer import Layer
 
 class Sequential_Model:
     def __init__(self, layers, loss_fn):
@@ -25,5 +25,5 @@ class Sequential_Model:
 
     def step(self, lr_rate):
         for layer in self.layers[::-1]:
-            if isinstance(layer, Linear_Layer):
+            if isinstance(layer, Layer):
                 layer.step(lr_rate)

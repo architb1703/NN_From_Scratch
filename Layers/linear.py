@@ -1,8 +1,10 @@
+from math import sqrt
 import torch, torch.nn as nn
+from Layers.layer import Layer
 
-class Linear_Layer:
+class LinearLayer(Layer):
     def __init__(self, features_in, features_out):
-        self.weights = torch.normal(0,1/features_in,(features_out, features_in))
+        self.weights = torch.normal(0,sqrt(2/features_in),(features_out, features_in))
         self.bias = torch.zeros((features_out,1))
         self.prev_hidden_state = None
 
