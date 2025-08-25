@@ -18,7 +18,7 @@ class LinearLayer(Layer):
 
     def grad_calc(self, grads):
         self.w_grads = grads@(self.prev_hidden_state.T)
-        self.b_grads = grads@torch.ones(self.prev_hidden_state.shape[1],1)
+        self.b_grads = torch.sum(grads, dim=1, keepdim=True)
 
         self.h_grads = self.weights.T @ grads
         return self.h_grads
@@ -26,3 +26,8 @@ class LinearLayer(Layer):
     def step(self, lr_rate):
         self.weights -= lr_rate*self.w_grads
         self.bias -= lr_rate*self.b_grads
+
+    def to(self, device):
+        self.weights = self.weights.to(device)
+        self.bias = self.bias.to(device)
+        self.device = device

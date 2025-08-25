@@ -27,3 +27,8 @@ class Sequential_Model:
         for layer in self.layers[::-1]:
             if isinstance(layer, Layer):
                 layer.step(lr_rate)
+
+    def to(self, device):
+        for layer in self.layers:
+            if isinstance(layer, Layer):
+                layer.to(device)

@@ -28,7 +28,7 @@ class Conv2DLayer(Layer):
         X = torch.unsqueeze(X,1)
         output_shape = self.output_shape(X.shape)
         self.previous_hidden_state = X
-        H = torch.zeros((X.shape[0],self.channels_out,output_shape[0],output_shape[1]))
+        H = torch.zeros((X.shape[0],self.channels_out,output_shape[0],output_shape[1])).to(self.device)
 
         for i in range(H.shape[-2]):
             for j in range(H.shape[-1]):
@@ -39,8 +39,8 @@ class Conv2DLayer(Layer):
         return H
 
     def grad_calc(self, grads):
-        self.w_grads = torch.zeros(self.weights.shape)
-        self.b_grads = torch.zeros(self.bias.shape)
+        self.w_grads = torch.zeros(self.weights.shape).to(self.device)
+        self.b_grads = torch.zeros(self.bias.shape).to(self.device)
 
         #calculating wgrads
         for i in range(grads.shape[-2]):
@@ -51,7 +51,7 @@ class Conv2DLayer(Layer):
                 self.w_grads += torch.sum(torch.mul(grads_in[:,:,None,None,None],mat_in), dim=0)
                 self.b_grads += torch.sum(grads[:,:,i,j], dim=0)
 
-        self.h_grads = torch.zeros(self.previous_hidden_state.shape).squeeze(1)
+        self.h_grads = torch.zeros(self.previous_hidden_state.shape).squeeze(1).to(self.device)
         for i in range(grads.shape[-2]):
             for j in range(grads.shape[-1]):
                 row_idx, col_idx = i*self.stride[0], j*self.stride[1]
@@ -63,3 +63,10 @@ class Conv2DLayer(Layer):
     def step(self, lr_rate):
         self.weights -= lr_rate*self.w_grads
         self.bias -= lr_rate*self.b_grads
+
+    def to(self, device):
+        self.weights = self.weights.to(device)
+        self.bias = self.bias.to(device)
+        self.w_grads = self.w_grads.to(device)
+        self.b_grads = self.b_grads.to(device)
+        self.device = device

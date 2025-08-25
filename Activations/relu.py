@@ -5,7 +5,7 @@ class relu:
         self.activations = None
 
     def __call__(self, X):
-        self.activations = torch.maximum(torch.zeros(X.shape),X)
+        self.activations = torch.maximum(torch.zeros(X.shape).to(X.device),X)
         return self.activations
 
     def grad_calc(self, grads):

@@ -14,3 +14,6 @@ class Flatten(Layer):
 
     def step(self, *args):
         pass
+
+    def to(self, device):
+        pass

@@ -12,3 +12,7 @@ class Layer(ABC):
     @abstractmethod
     def step(self, *args):
         pass
+
+    @abstractmethod
+    def to(self, device):
+        pass
