@@ -1,4 +1,6 @@
-# NN_From_Scratch
+# NN_From_Scratch - Training neural networks without torch.nn
+
+My goal with this repo is to implement neural network concepts from scratch, without using any of the specialized neural network libraries like torch.nn. This, I feel, is really important to think more deeply about the functions we so quickly use when training models otherwise. I started from a simple linear model, and the goal is to be able to reproduce some simple papers/architectures using just this library.
 
 ## Setup
 
