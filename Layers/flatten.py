@@ -7,10 +7,10 @@ class Flatten(Layer):
 
     def __call__(self, X):
         self.orig_shape = X.shape
-        return X.view(self.orig_shape[0],-1).T
+        return X.view(self.orig_shape[0],-1)
 
     def grad_calc(self, grads):
-        return grads.T.view(self.orig_shape)
+        return grads.view(self.orig_shape)
 
     def step(self, *args):
         pass

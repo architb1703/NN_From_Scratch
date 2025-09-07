@@ -1,4 +1,4 @@
-import torch, torch.nn as nn
+import torch
 
 class relu:
     def __init__(self):

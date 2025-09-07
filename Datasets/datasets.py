@@ -25,10 +25,12 @@ class DataLoader:
         if(device == None):
             device = X_train.device
 
+        y_train = y_train.unsqueeze(1)
+
         idxs = torch.randperm(X_train.shape[0])
 
         self.X_train = X_train[idxs]
-        self.y_train = y_train[:,idxs]
+        self.y_train = y_train[idxs]
         self.batch_size = batch_size
 
     def __iter__(self):
@@ -36,4 +38,4 @@ class DataLoader:
 
     def generator(self):
         for i in range(0, self.X_train.shape[0], self.batch_size):
-            yield [self.X_train[i:i+self.batch_size], self.y_train[:,i:i+self.batch_size]]
+            yield [self.X_train[i:i+self.batch_size], self.y_train[i:i+self.batch_size]]

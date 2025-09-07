@@ -16,6 +16,7 @@ class Conv2DLayer(Layer):
         self.previous_hidden_state = None
         self.w_grads = torch.zeros(self.weights.shape)
         self.b_grads = torch.zeros(self.bias.shape)
+        self.device = "cpu"
 
     def output_shape(self, input_shape):
         x1 = input_shape[-2]-(self.window_size[0]-1)
